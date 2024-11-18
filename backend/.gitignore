@@ -1,0 +1,8 @@
+__pycache__/
+data/
+dataset/
+logs/
+plots/
+loss_logs.csv
+GAN.py
+tensorboard_test.py
