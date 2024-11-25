@@ -6,3 +6,5 @@ plots/
 loss_logs.csv
 GAN.py
 tensorboard_test.py
+.env
+*.json

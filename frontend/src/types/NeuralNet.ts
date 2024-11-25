@@ -13,5 +13,11 @@ export interface ConvLayer extends BaseLayer {
 	activation: string;
 }
 
+export type Epoch = {
+	id: number;
+	gen_loss: number;
+	disc_loss: number;
+};
+
 export type Layer = DenseLayer | ConvLayer;
 // TODO: Fix all the types and create types/interfaces for remaining layer types and components

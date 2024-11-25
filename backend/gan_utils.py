@@ -5,6 +5,13 @@ import torchvision
 import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+cred = credentials.Certificate("neurviz-dev-firebase-adminsdk-klnbv-818a8cffb8.json")
+firebase_app = firebase_admin.initialize_app(cred)
+db = firestore.client()
+
 
 class Discriminator(nn.Module): 
     def __init__(self, layers):
@@ -109,7 +116,7 @@ class GAN():
                 
         return res
 
-    def train(self):
+    def train(self, jobID):
         mean, std = 0.5, 0.5
         data_transforms = transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize((mean), (std))] # This is used 
@@ -123,6 +130,9 @@ class GAN():
         disc_optimizer = optim.SGD(self.discriminator.parameters(), lr=self.gan["hyperparameters"]["learningRate"], momentum=momentum)
         loss_function = nn.BCELoss()
 
+
+        jobRef = db.collection("Jobs").document(jobID)
+        
         for epoch in range(self.gan["hyperparameters"]["epochs"]):
             for batch, (real, _ ) in enumerate(loader):
                 real = real.view(-1, 784).to(self.device) 
@@ -147,5 +157,10 @@ class GAN():
                 gen_optimizer.step()
                 
                 if batch == 0:
-                    print(f"Epoch: {epoch}, Generator Loss: {gen_loss}, Discriminator Loss: {total_loss}")
-                
+                    new_epoch = { "gen_loss": gen_loss.item(), "disc_loss" : total_loss.item() }
+                    jobRef.update({
+                        "epochs" : firestore.ArrayUnion([new_epoch])
+                    })
+                    print(f"Epoch: {epoch}, Generator Loss: {gen_loss.item()}, Discriminator Loss: {total_loss.item()}")
+        
+        jobRef.update({ "isTraining": False })

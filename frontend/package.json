@@ -27,7 +27,10 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "crypto-js": "^4.2.0",
     "date-fns": "^3.6.0",
+    "firebase": "^11.0.2",
+    "firebase-admin": "^13.0.0",
     "lucide-react": "^0.454.0",
     "next": "15.0.2",
     "radix-ui": "^1.0.1",
@@ -41,6 +44,7 @@
     "vaul": "^1.1.1"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

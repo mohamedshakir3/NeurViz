@@ -23,7 +23,6 @@ export function useBreadcrumbs() {
 		}
 
 		const segments = pathname.split("/").filter(Boolean);
-		console.log(segments);
 		return segments.map((segment, index) => {
 			const path = `/${segments.slice(0, index + 1).join("/")}`;
 			return {

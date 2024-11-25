@@ -15,8 +15,6 @@ export function Breadcrumbs() {
 	const items = useBreadcrumbs();
 	if (items.length === 0) return null;
 
-	console.log(items);
-
 	return (
 		<Breadcrumb>
 			<BreadcrumbList>
