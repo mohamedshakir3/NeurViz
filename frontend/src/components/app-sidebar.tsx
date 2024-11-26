@@ -1,37 +1,12 @@
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuPortal,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import {
 	Sidebar,
 	SidebarContent,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarGroupLabel,
 	SidebarMenu,
-	SidebarMenuButton,
 	SidebarMenuItem,
-	SidebarMenuSub,
-	SidebarMenuAction,
-	SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
-
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 
 import {
 	GeneratorMenuItem,

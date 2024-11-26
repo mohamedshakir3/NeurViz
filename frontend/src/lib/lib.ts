@@ -1,13 +1,9 @@
 "use server";
 import { cookies } from "next/headers";
 import { db } from "@/lib/firebase";
-import {
-	collection,
-	doc,
-	getDoc,
-	setDoc,
-	onSnapshot,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function storeGan(gan: any) {
 	const cookieStore = await cookies();
 	cookieStore.set("gan", JSON.stringify(gan));
@@ -36,19 +32,23 @@ export async function initializeJob(JobID: string) {
 	await setDoc(doc(db, "Jobs", JobID), {
 		...gan,
 		epochs: [],
-		isTraining: true,
+		isTraining: false,
 	});
 
-	return { ...gan, epochs: [], isTraining: true };
+	return { ...gan, epochs: [], isTraining: false };
 }
 
 export async function trainModel(JobID: string) {
 	const gan = await getSession();
+
+	await updateDoc(doc(db, "Jobs", JobID), {
+		isTraining: true,
+	});
 	if (!gan) {
 		return null;
 	}
 	try {
-		const response = await fetch("http://localhost:5100/", {
+		const response = await fetch(`${process.env.BACKEND_AUTH}/Train`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

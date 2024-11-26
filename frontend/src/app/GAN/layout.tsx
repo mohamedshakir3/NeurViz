@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import {
-	SidebarProvider,
-	SidebarTrigger,
-	SidebarInset,
-} from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import Header from "@/components/Header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { GanProvider } from "@/components/GanProvider";

@@ -117,6 +117,8 @@ class GAN():
         return res
 
     def train(self, jobID):
+        jobRef = db.collection("Jobs").document(jobID)        
+        
         mean, std = 0.5, 0.5
         data_transforms = transforms.Compose(
             [transforms.ToTensor(), transforms.Normalize((mean), (std))] # This is used 
@@ -130,14 +132,10 @@ class GAN():
         disc_optimizer = optim.SGD(self.discriminator.parameters(), lr=self.gan["hyperparameters"]["learningRate"], momentum=momentum)
         loss_function = nn.BCELoss()
 
-
-        jobRef = db.collection("Jobs").document(jobID)
-        
         for epoch in range(self.gan["hyperparameters"]["epochs"]):
             for batch, (real, _ ) in enumerate(loader):
                 real = real.view(-1, 784).to(self.device) 
                 batch_size = real.shape[0] 
-                
                 noise = torch.randn(batch_size, self.gan["hyperparameters"]["noiseDim"]).to(self.device)
                 generated_data = self.generator(noise)
                 disc_value = self.discriminator(real).view(-1)

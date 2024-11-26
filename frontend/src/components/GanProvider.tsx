@@ -1,7 +1,6 @@
 "use client";
 import { useState, createContext, useContext } from "react";
 import type { Layer } from "@/types/NeuralNet";
-import { getSession } from "@/lib/lib";
 interface GanState {
 	hyperparameters: {
 		learningRate: number;
@@ -19,7 +18,7 @@ interface GanContextType {
 }
 
 const GanContext = createContext<GanContextType | undefined>(undefined);
-
+// TODO: Use existing gan stored in cookies for inital state.
 export function GanProvider({ children }: { children: React.ReactNode }) {
 	const [gan, setGan] = useState<GanState>({
 		hyperparameters: {

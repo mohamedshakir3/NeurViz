@@ -1,17 +1,5 @@
 "use client";
-import {
-	Sidebar,
-	SidebarContent,
-	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel,
-	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarMenuSub,
-	SidebarMenuAction,
-	SidebarMenuSubItem,
-} from "@/components/ui/sidebar";
+import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { Slider } from "@/components/ui/slider";
 import { useGan } from "@/components/GanProvider";
 import { usePathname } from "next/navigation";

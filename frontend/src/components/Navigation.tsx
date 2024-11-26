@@ -8,28 +8,23 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
-import DenseLayerComponent from "@/components/DenseLayerComponent";
 import LayerComponent from "@/components/LayerComponent";
-import CreateLayerModal from "@/components/CreateLayerModal";
-import { use, useState } from "react";
-import { useGan } from "@/components/GanProvider";
-import type { Layer, DenseLayer, ConvLayer } from "@/types/NeuralNet";
+import { useState } from "react";
+import type { Layer } from "@/types/NeuralNet";
 
+// TODO: I think this entire file is from the old design and can be removed entirely.
 export default function Navigation() {
-	const [genLayers, setGenLayers] = useState<Layer[]>([
+	const [genLayers] = useState<Layer[]>([
 		{ type: "Dense", channels: 256, activation: "ReLU" },
 		{ type: "Dense", channels: 784, activation: "Tanh" },
 	]);
-	const [discLayers, setDiscLayers] = useState<Layer[]>([
+	const [discLayers] = useState<Layer[]>([
 		{ type: "Dense", channels: 256, activation: "ReLU" },
 		{ type: "Dense", channels: 128, activation: "ReLU" },
 		{ type: "Dense", channels: 1, activation: "Sigmoid" },
 	]);
-	const { gan, setGan } = useGan()!;
 	return (
 		<div className="w-full max-w-6xl mx-auto p-12 space-y-6">
 			<Tabs defaultValue="hyperparameters">

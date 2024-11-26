@@ -59,7 +59,8 @@ export default function CreateLayerModal({ network }: { network: string }) {
 				<DialogHeader>
 					<DialogTitle>Create Dense Layer</DialogTitle>
 					<DialogDescription>
-						Configure a new dense layer here. Click add layer when you're done.
+						Configure a new dense layer here. Click add layer when you&apos;re
+						done.
 					</DialogDescription>
 				</DialogHeader>
 				<div className="grid gap-4 py-4">

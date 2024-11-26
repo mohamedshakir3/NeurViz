@@ -7,7 +7,11 @@ load_dotenv()
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
+def get():
+    return { "Status" : "API Running!" }
+
+@app.route("/Train", methods=["POST"])
 def train_model():
     request_data = request.get_json()
     gan_data = request_data["gan"]
@@ -17,4 +21,4 @@ def train_model():
     return { "res" : "Successfully trained!" }
     
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True, port=5100)
+    app.run(host="0.0.0.0", port=5100)

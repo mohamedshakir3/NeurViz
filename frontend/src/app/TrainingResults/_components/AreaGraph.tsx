@@ -1,11 +1,4 @@
-import {
-	Area,
-	AreaChart,
-	CartesianGrid,
-	XAxis,
-	YAxis,
-	Tooltip,
-} from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
 	Card,
 	CardContent,

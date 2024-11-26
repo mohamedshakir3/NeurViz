@@ -8,7 +8,7 @@ import { storeGan } from "@/lib/lib";
 import CryptoJS from "crypto-js";
 
 export default function TrainModel() {
-	const { gan, setGan } = useGan()!;
+	const { gan } = useGan()!;
 	const pathName = usePathname();
 	const isGAN = pathName === "/GAN";
 	const router = useRouter();

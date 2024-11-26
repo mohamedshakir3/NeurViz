@@ -3,5 +3,4 @@ flask-cors
 torch
 torchvision
 python-dotenv
-gunicorn
 firebase-admin

@@ -1,8 +1,6 @@
 "use client";
 import "@/app/globals.css";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-	BatchNorm,
 	Noise,
 	ReLU,
 	Conv,
@@ -22,7 +20,7 @@ import { Fragment } from "react";
 import { useGan } from "@/components/GanProvider";
 export default function GridBackground() {
 	const isMobile = useIsMobile();
-	const { gan, setGan } = useGan()!;
+	const { gan } = useGan()!;
 	const containerClass = isMobile
 		? ""
 		: "absolute shadow-lg grid-background w-[95%] h-[95%] rounded-[1rem] p-6";

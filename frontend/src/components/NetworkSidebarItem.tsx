@@ -1,47 +1,23 @@
 "use client";
-import {
-	Calendar,
-	Home,
-	Inbox,
-	Search,
-	Settings,
-	ChevronRight,
-	MoreHorizontal,
-} from "lucide-react";
+import { ChevronRight, MoreHorizontal } from "lucide-react";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuPortal,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-	Sidebar,
-	SidebarContent,
-	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel,
-	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarMenuSub,
 	SidebarMenuAction,
-	SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { useState } from "react";
-import type { Layer, ConvLayer } from "@/types/NeuralNet";
+import type { ConvLayer } from "@/types/NeuralNet";
 import CreateLayerModal from "@/components/CreateLayerModal";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { useGan } from "@/components/GanProvider";
