@@ -18,7 +18,7 @@ export default function Epochs({ jobID }: { jobID: string }) {
 			setEpochs(updatedEpochs?.epochs || []);
 		});
 		return () => unsubscribe();
-	}, [jobID, jobRef]);
+	}, []);
 	const isMobile = useIsMobile();
 	// TODO: This looks ass on mobile
 	return (

@@ -33,7 +33,7 @@ export default function Dashboard({ jobID, job }: { jobID: string; job: any }) {
 			});
 			return () => unsubscribe();
 		}
-	}, [trainingJob, jobID]);
+	}, []);
 	const lastEpoch =
 		trainingJob.epochs?.length > 0
 			? trainingJob.epochs[trainingJob.epochs.length - 1]
