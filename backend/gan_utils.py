@@ -8,7 +8,7 @@ import torchvision.transforms as transforms
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-cred = credentials.Certificate("neurviz-dev-firebase-adminsdk-klnbv-818a8cffb8.json")
+cred = credentials.Certificate("neurviz-firebase-adminsdk-s410y-2d738e85aa.json")
 firebase_app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 

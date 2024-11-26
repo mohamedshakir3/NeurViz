@@ -9,7 +9,6 @@ export default async function OverViewPage({
 	params: Promise<Params>;
 }) {
 	const jobID = (await params).JobID;
-	console.log(params);
 	let job = await getJobById(jobID);
 	if (!job) {
 		job = await initializeJob(jobID);

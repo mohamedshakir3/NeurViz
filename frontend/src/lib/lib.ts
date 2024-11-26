@@ -48,7 +48,7 @@ export async function trainModel(JobID: string) {
 		return null;
 	}
 	try {
-		const response = await fetch(`${process.env.BACKEND_AUTH}/Train`, {
+		const response = await fetch(`${process.env.BACKEND_AUTH}Train`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
