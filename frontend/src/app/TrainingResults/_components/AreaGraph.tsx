@@ -1,18 +1,18 @@
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/card"
 import {
 	ChartConfig,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
-} from "@/components/ui/chart";
-import { type Epoch } from "@/types/NeuralNet";
+} from "@/components/ui/chart"
+import { type Epoch } from "@/types/NeuralNet"
 
 const chartConfig = {
 	gen_loss: {
@@ -23,7 +23,7 @@ const chartConfig = {
 		label: "Discriminator Loss",
 		color: "hsl(var(--chart-2))",
 	},
-} satisfies ChartConfig;
+} satisfies ChartConfig
 
 // TODO: Fix spacing for tooltip label
 export function AreaGraph({ data }: { data: Epoch[] }) {
@@ -31,7 +31,7 @@ export function AreaGraph({ data }: { data: Epoch[] }) {
 		epoch: index,
 		gen_loss: epoch.gen_loss,
 		disc_loss: epoch.disc_loss,
-	}));
+	}))
 
 	return (
 		<Card>
@@ -85,5 +85,5 @@ export function AreaGraph({ data }: { data: Epoch[] }) {
 				</ChartContainer>
 			</CardContent>
 		</Card>
-	);
+	)
 }

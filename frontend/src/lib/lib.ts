@@ -57,6 +57,7 @@ export async function trainModel(JobID: string) {
 		});
 
 		if (!response.ok) {
+			console.log(response);
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 

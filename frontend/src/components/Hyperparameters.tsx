@@ -1,12 +1,12 @@
-"use client";
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { Slider } from "@/components/ui/slider";
-import { useGan } from "@/components/GanProvider";
-import { usePathname } from "next/navigation";
+"use client"
+import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
+import { Slider } from "@/components/ui/slider"
+import { useGan } from "@/components/GanProvider"
+import { usePathname } from "next/navigation"
 export default function Hyperparameters() {
-	const { gan, setGan } = useGan()!;
-	const pathname = usePathname();
-	const isGAN = pathname == "/GAN";
+	const { gan, setGan } = useGan()!
+	const pathname = usePathname()
+	const isGAN = pathname == "/GAN"
 
 	return (
 		<>
@@ -111,5 +111,5 @@ export default function Hyperparameters() {
 				)}
 			</SidebarMenuItem>
 		</>
-	);
+	)
 }

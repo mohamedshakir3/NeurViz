@@ -1,41 +1,41 @@
-"use client";
-import { ChevronRight, MoreHorizontal } from "lucide-react";
+"use client"
+import { ChevronRight, MoreHorizontal } from "lucide-react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu"
 import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarMenuSub,
 	SidebarMenuAction,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import type { ConvLayer } from "@/types/NeuralNet";
-import CreateLayerModal from "@/components/CreateLayerModal";
-import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { useGan } from "@/components/GanProvider";
-import { usePathname } from "next/navigation";
+} from "@/components/ui/collapsible"
+import type { ConvLayer } from "@/types/NeuralNet"
+import CreateLayerModal from "@/components/CreateLayerModal"
+import { Dialog, DialogTrigger } from "@radix-ui/react-dialog"
+import { useGan } from "@/components/GanProvider"
+import { usePathname } from "next/navigation"
 
 export function GeneratorMenuItem() {
-	const { gan, setGan } = useGan()!;
-	const pathName = usePathname();
-	const isGAN = pathName == "/GAN";
+	const { gan, setGan } = useGan()!
+	const pathName = usePathname()
+	const isGAN = pathName == "/GAN"
 	const deleteGenLayer = (index: number) => {
 		const newLayers = gan.generator.filter((layer, idx) => {
-			return idx != index;
-		});
+			return idx != index
+		})
 		setGan({
 			...gan,
 			generator: newLayers,
-		});
-	};
+		})
+	}
 
 	return (
 		<Collapsible defaultOpen className="group/gen">
@@ -109,21 +109,21 @@ export function GeneratorMenuItem() {
 				</CollapsibleContent>
 			</SidebarMenuItem>
 		</Collapsible>
-	);
+	)
 }
 export function DiscriminatorMenuItem() {
-	const { gan, setGan } = useGan()!;
-	const pathName = usePathname();
-	const isGAN = pathName == "/";
+	const { gan, setGan } = useGan()!
+	const pathName = usePathname()
+	const isGAN = pathName == "/"
 	const deleteDiscLayer = (index: number) => {
 		const newLayers = gan.discriminator.filter((layer, idx) => {
-			return idx != index;
-		});
+			return idx != index
+		})
 		setGan({
 			...gan,
 			discriminator: newLayers,
-		});
-	};
+		})
+	}
 
 	return (
 		<Collapsible defaultOpen className="group/Disc">
@@ -198,5 +198,5 @@ export function DiscriminatorMenuItem() {
 				</CollapsibleContent>
 			</SidebarMenuItem>
 		</Collapsible>
-	);
+	)
 }

@@ -1,5 +1,5 @@
-"use client";
-import { Button } from "@/components/ui/button";
+"use client"
+import { Button } from "@/components/ui/button"
 import {
 	Card,
 	CardContent,
@@ -7,24 +7,24 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus } from "lucide-react";
-import LayerComponent from "@/components/LayerComponent";
-import { useState } from "react";
-import type { Layer } from "@/types/NeuralNet";
+} from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Plus } from "lucide-react"
+import LayerComponent from "@/components/LayerComponent"
+import { useState } from "react"
+import type { Layer } from "@/types/NeuralNet"
 
 // TODO: I think this entire file is from the old design and can be removed entirely.
 export default function Navigation() {
 	const [genLayers] = useState<Layer[]>([
 		{ type: "Dense", channels: 256, activation: "ReLU" },
 		{ type: "Dense", channels: 784, activation: "Tanh" },
-	]);
+	])
 	const [discLayers] = useState<Layer[]>([
 		{ type: "Dense", channels: 256, activation: "ReLU" },
 		{ type: "Dense", channels: 128, activation: "ReLU" },
 		{ type: "Dense", channels: 1, activation: "Sigmoid" },
-	]);
+	])
 	return (
 		<div className="w-full max-w-6xl mx-auto p-12 space-y-6">
 			<Tabs defaultValue="hyperparameters">
@@ -179,5 +179,5 @@ export default function Navigation() {
 		// 		</Card>
 		// 	</TabsContent>
 		// </Tabs>
-	);
+	)
 }

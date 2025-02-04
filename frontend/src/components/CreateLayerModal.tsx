@@ -1,6 +1,6 @@
-"use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+"use client"
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
 import {
 	DialogContent,
 	DialogDescription,
@@ -8,7 +8,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogClose,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
 	Select,
 	SelectContent,
@@ -17,27 +17,27 @@ import {
 	SelectLabel,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/ui/select";
-import { useGan } from "@/components/GanProvider";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import type { Layer } from "@/types/NeuralNet";
+} from "@/components/ui/select"
+import { useGan } from "@/components/GanProvider"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import type { Layer } from "@/types/NeuralNet"
 
 export default function CreateLayerModal({ network }: { network: string }) {
-	const [channels, setChannels] = useState<number>(1024);
-	const [activation, setActivation] = useState<string>("ReLU");
-	const [kernel, setKernel] = useState<number>(4);
-	const [stride, setStride] = useState<number>(2);
-	const [type, setType] = useState<string>("Dense");
-	const { gan, setGan } = useGan()!;
+	const [channels, setChannels] = useState<number>(1024)
+	const [activation, setActivation] = useState<string>("ReLU")
+	const [kernel, setKernel] = useState<number>(4)
+	const [stride, setStride] = useState<number>(2)
+	const [type, setType] = useState<string>("Dense")
+	const { gan, setGan } = useGan()!
 	const addLayers = () => {
-		let newLayer: Layer;
+		let newLayer: Layer
 		if (type === "Dense") {
 			newLayer = {
 				type,
 				channels,
 				activation,
-			};
+			}
 		} else {
 			newLayer = {
 				type,
@@ -45,14 +45,14 @@ export default function CreateLayerModal({ network }: { network: string }) {
 				kernel,
 				stride,
 				activation,
-			};
+			}
 		}
 		if (network == "generator") {
-			setGan({ ...gan, generator: [...gan.generator, newLayer] });
+			setGan({ ...gan, generator: [...gan.generator, newLayer] })
 		} else if (network == "discriminator") {
-			setGan({ ...gan, generator: [...gan.generator, newLayer] });
+			setGan({ ...gan, generator: [...gan.generator, newLayer] })
 		}
-	};
+	}
 	return (
 		<>
 			<DialogContent className="sm:max-w-[425px]">
@@ -157,5 +157,5 @@ export default function CreateLayerModal({ network }: { network: string }) {
 				</DialogFooter>
 			</DialogContent>
 		</>
-	);
+	)
 }

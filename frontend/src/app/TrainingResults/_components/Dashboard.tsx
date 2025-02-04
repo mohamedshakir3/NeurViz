@@ -1,43 +1,49 @@
-"use client";
-import { AreaGraph } from "@/app/TrainingResults/_components/AreaGraph";
-import PageContainer from "@/components/layout/page-container";
-import Epochs from "@/app/TrainingResults/_components/Epochs";
-import { useState, useEffect } from "react";
-import { collection, onSnapshot, doc } from "firebase/firestore";
+"use client"
+import { AreaGraph } from "@/app/TrainingResults/_components/AreaGraph"
+import PageContainer from "@/components/layout/page-container"
+import Epochs from "@/app/TrainingResults/_components/Epochs"
+import { useState, useEffect } from "react"
+import { collection, onSnapshot, doc } from "firebase/firestore"
 import {
 	Card,
 	CardContent,
 	CardDescription,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { db } from "@/lib/firebase";
-import { BrainCircuit, Disc, Dumbbell, Layers } from "lucide-react";
+} from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { db } from "@/lib/firebase"
+import { BrainCircuit, Disc, Dumbbell, Layers } from "lucide-react"
 
-const jobRef = collection(db, "Jobs"); // Collection
+const jobRef = collection(db, "Jobs") // Collection
 // TODO: Fix all the types here.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function Dashboard({ jobID, job }: { jobID: string; job: any }) {
+export default function Dashboard({
+	jobID,
+	job,
+}: {
+	jobID: string
+	job: any
+}) {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const [trainingJob, setTrainingJob] = useState<any>(job);
+	const [trainingJob, setTrainingJob] = useState<any>(job)
 	useEffect(() => {
 		if (trainingJob.isTraining) {
 			const unsubscribe = onSnapshot(doc(jobRef, jobID), (snapshot) => {
-				const updatedEpochs = snapshot.data() || {};
+				const updatedEpochs = snapshot.data() || {}
 				setTrainingJob({
 					...trainingJob,
 					epochs: updatedEpochs?.epochs,
 					isTraining: updatedEpochs?.isTraining,
-				});
-			});
-			return () => unsubscribe();
+				})
+			})
+			return () => unsubscribe()
 		}
-	}, []);
+	}, [])
 	const lastEpoch =
 		trainingJob.epochs?.length > 0
 			? trainingJob.epochs[trainingJob.epochs.length - 1]
-			: { gen_loss: 0, disc_loss: 0 };
+			: { gen_loss: 0, disc_loss: 0 }
 
 	return (
 		<PageContainer scrollable>
@@ -137,5 +143,5 @@ export default function Dashboard({ jobID, job }: { jobID: string; job: any }) {
 				</Tabs>
 			</div>
 		</PageContainer>
-	);
+	)
 }

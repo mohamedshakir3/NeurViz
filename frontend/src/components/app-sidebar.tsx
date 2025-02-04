@@ -6,15 +6,15 @@ import {
 	SidebarGroupLabel,
 	SidebarMenu,
 	SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"
 
 import {
 	GeneratorMenuItem,
 	DiscriminatorMenuItem,
-} from "@/components/NetworkSidebarItem";
-import Hyperparameters from "./Hyperparameters";
-import PretrainedModelSelector from "./PretrainedModelSelector";
-import TrainModel from "@/components/TrainModelButton";
+} from "@/components/NetworkSidebarItem"
+import Hyperparameters from "./Hyperparameters"
+import PretrainedModelSelector from "./PretrainedModelSelector"
+import TrainModel from "@/components/TrainModelButton"
 
 export function AppSidebar() {
 	return (
@@ -45,5 +45,5 @@ export function AppSidebar() {
 				</SidebarMenu>
 			</SidebarContent>
 		</Sidebar>
-	);
+	)
 }

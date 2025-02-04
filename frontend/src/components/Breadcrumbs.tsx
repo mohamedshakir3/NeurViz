@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -6,14 +6,14 @@ import {
 	BreadcrumbList,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { useBreadcrumbs } from "@/hooks/use-breadcrumbs";
-import { Slash } from "lucide-react";
-import { Fragment } from "react";
+} from "@/components/ui/breadcrumb"
+import { useBreadcrumbs } from "@/hooks/use-breadcrumbs"
+import { Slash } from "lucide-react"
+import { Fragment } from "react"
 
 export function Breadcrumbs() {
-	const items = useBreadcrumbs();
-	if (items.length === 0) return null;
+	const items = useBreadcrumbs()
+	if (items.length === 0) return null
 
 	return (
 		<Breadcrumb>
@@ -37,5 +37,5 @@ export function Breadcrumbs() {
 				))}
 			</BreadcrumbList>
 		</Breadcrumb>
-	);
+	)
 }

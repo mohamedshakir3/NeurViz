@@ -1,7 +1,7 @@
-import React from "react";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
-import { Breadcrumbs } from "@/components/Breadcrumbs";
+import React from "react"
+import { SidebarTrigger } from "@/components/ui/sidebar"
+import { Separator } from "@/components/ui/separator"
+import { Breadcrumbs } from "@/components/Breadcrumbs"
 
 export default function Header() {
 	return (
@@ -12,5 +12,5 @@ export default function Header() {
 				<Breadcrumbs />
 			</div>
 		</header>
-	);
+	)
 }

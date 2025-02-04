@@ -1,5 +1,5 @@
-"use client";
-import "@/app/globals.css";
+"use client"
+import "@/app/globals.css"
 import {
 	Noise,
 	ReLU,
@@ -8,22 +8,22 @@ import {
 	Tanh,
 	Sigmoid,
 	LeakyReLU,
-} from "@/components/LayerSvg";
+} from "@/components/LayerSvg"
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Fragment } from "react";
-import { useGan } from "@/components/GanProvider";
+} from "@/components/ui/tooltip"
+import { useIsMobile } from "@/hooks/use-mobile"
+import { Fragment } from "react"
+import { useGan } from "@/components/GanProvider"
 export default function GridBackground() {
-	const isMobile = useIsMobile();
-	const { gan } = useGan()!;
+	const isMobile = useIsMobile()
+	const { gan } = useGan()!
 	const containerClass = isMobile
 		? ""
-		: "absolute shadow-lg grid-background w-[95%] h-[95%] rounded-[1rem] p-6";
+		: "absolute shadow-lg grid-background w-[95%] h-[95%] rounded-[1rem] p-6"
 	return (
 		<div className="relative w-full grid place-items-center">
 			<div className={containerClass}>
@@ -98,5 +98,5 @@ export default function GridBackground() {
 				</div>
 			</div>
 		</div>
-	);
+	)
 }

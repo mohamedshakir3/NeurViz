@@ -1,17 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+/* 
 :root {
   --foreground: #171717;
   --grid-lines: #77767612;
 }
-/*
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    --grid-lines: #93919112;
   }
 } */
 
@@ -156,5 +155,37 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f0f0f0;
+  animation: fadeIn 2s ease-in-out; /* Example animation */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Scroll-away effect */
+.intro.scroll-away {
+  animation: scrollUp 1.5s ease-in-out forwards;
+}
+
+@keyframes scrollUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100vh); /* Move the page up and out of view */
   }
 }
