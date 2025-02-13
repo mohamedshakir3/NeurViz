@@ -75,6 +75,9 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    --brand: 255 92% 76%;
+    --brand-foreground: 243.4 75.4% 58.6%;
   }
   @media (prefers-color-scheme: dark) {
     :root {
@@ -110,6 +113,10 @@
       --sidebar-accent-foreground: 240 5.9% 10%;
       --sidebar-border: 220 13% 91%;
       --sidebar-ring: 217.2 91.2% 59.8%;
+
+
+      --brand: 255 92% 76%;
+      --brand-foreground: 243.4 75.4% 58.6%;
     }
   }
 
@@ -146,6 +153,9 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --brand: 255 92% 76%;
+    --brand-foreground: 243.4 75.4% 58.6%;
   }
 }
 
@@ -157,35 +167,56 @@
     @apply bg-background text-foreground;
   }
 }
-
-.intro {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* Full viewport height */
-  background-color: #f0f0f0;
-  animation: fadeIn 2s ease-in-out; /* Example animation */
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
+@layer utilities {
+  .fade-x {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 25%,
+      black 75%,
+      transparent 100%
+    );
   }
-  100% {
-    opacity: 1;
-  }
-}
 
-/* Scroll-away effect */
-.intro.scroll-away {
-  animation: scrollUp 1.5s ease-in-out forwards;
-}
-
-@keyframes scrollUp {
-  0% {
-    transform: translateY(0);
+  .fade-y {
+    mask-image: linear-gradient(
+      to top,
+      transparent 0%,
+      black 25%,
+      black 75%,
+      transparent 100%
+    );
   }
-  100% {
-    transform: translateY(-100vh); /* Move the page up and out of view */
+
+  .fade-top {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 35%);
+  }
+
+  .fade-bottom {
+    mask-image: linear-gradient(to top, transparent 0%, black 35%);
+  }
+
+  .fade-top-lg {
+    mask-image: linear-gradient(to bottom, transparent 15%, black 100%);
+  }
+
+  .fade-bottom-lg {
+    mask-image: linear-gradient(to top, transparent 15%, black 100%);
+  }
+
+  .fade-left {
+    mask-image: linear-gradient(to right, transparent 0%, black 35%);
+  }
+
+  .fade-right {
+    mask-image: linear-gradient(to left, transparent 0%, black 35%);
+  }
+
+  .fade-left-lg {
+    mask-image: linear-gradient(to right, transparent 15%, black 100%);
+  }
+
+  .fade-right-lg {
+    mask-image: linear-gradient(to left, transparent 15%, black 100%);
   }
 }

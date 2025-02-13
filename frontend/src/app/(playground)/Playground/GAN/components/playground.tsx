@@ -23,14 +23,13 @@ import { Separator } from "@/components/ui/separator"
 
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 
-import CodeViewer from "./components/code-viewer"
-import { NoiseDimSelector } from "./components/noisedim-selector"
-import { PresetActions } from "./components/preset-actions"
-import { PresetSave } from "./components/preset-save"
-import { PresetSelector, presets } from "./components/preset-selector"
-import { PresetShare } from "./components/preset-share"
-import { LearningSelector } from "./components/learning-selector"
-import { EpochSelector } from "./components/epoch-selector"
+import CodeViewer from "./code-viewer"
+import { NoiseDimSelector } from "./noisedim-selector"
+import { PresetSave } from "./preset-save"
+import { PresetSelector, presets } from "./preset-selector"
+import { PresetShare } from "./preset-share"
+import { LearningSelector } from "./learning-selector"
+import { EpochSelector } from "./epoch-selector"
 import { useGan } from "@/components/GanProvider"
 import {
 	Accordion,
@@ -43,7 +42,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 
 import CreateLayerModal from "@/components/CreateLayerModal"
 
-export default function PlaygroundPage() {
+export default function Playground() {
 	const { gan } = useGan()!
 	return (
 		<>
@@ -98,7 +97,7 @@ export default function PlaygroundPage() {
 						</div>
 						<div className="md:order-1">
 							<div className="flex min-h-full flex-col space-y-4">
-								<div className="sm:px-2 min-h-[75vh] w-full dark:bg-black bg-white dark:bg-dot-white/[0.75] bg-dot-black/[1.0] relative flex items-center justify-center">
+								<div className="sm:px-2 min-h-[75vh] w-full dark:bg-background bg-white dark:bg-dot-white/[0.75] bg-dot-black/[1.0] relative flex items-center justify-center">
 									<TransformWrapper>
 										<TransformComponent
 											wrapperStyle={{

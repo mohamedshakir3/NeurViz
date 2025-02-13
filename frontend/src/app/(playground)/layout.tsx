@@ -1,8 +1,7 @@
 import type { Metadata } from "next"
-import "@/app/globals.css"
 import KBar from "@/components/kbar"
+import { Header } from "./components/header"
 import { GanProvider } from "@/components/GanProvider"
-import Header from "@/components/layout/header"
 export const metadata: Metadata = {
 	title: "NeurViz",
 	description: "A deep learning playground.",
@@ -15,10 +14,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<KBar>
-			<div data-wrapper="" className="border-grid flex flex-1 flex-col">
-				<Header />
-				<GanProvider>{children}</GanProvider>
-			</div>
+			<Header />
+			<GanProvider>{children}</GanProvider>
 		</KBar>
 	)
 }

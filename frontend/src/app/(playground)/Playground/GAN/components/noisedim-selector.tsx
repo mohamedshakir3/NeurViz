@@ -1,7 +1,4 @@
 "use client"
-
-import * as React from "react"
-
 import {
 	HoverCard,
 	HoverCardContent,
@@ -11,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
 import { useGan } from "@/components/GanProvider"
 
-export function EpochSelector() {
+export function NoiseDimSelector() {
 	const { gan, setGan } = useGan()!
 
 	return (
@@ -20,24 +17,24 @@ export function EpochSelector() {
 				<HoverCardTrigger asChild>
 					<div className="grid gap-4">
 						<div className="flex items-center justify-between">
-							<Label htmlFor="top-p">Epochs</Label>
+							<Label htmlFor="maxlength">Noise Dimension</Label>
 							<span className="w-12 rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
-								{gan.hyperparameters.epochs}
+								{gan.hyperparameters.noiseDim}
 							</span>
 						</div>
 						<Slider
-							defaultValue={[gan.hyperparameters.epochs]}
+							defaultValue={[gan.hyperparameters.noiseDim]}
 							max={200}
-							min={10}
+							min={50}
 							step={10}
 							className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
-							aria-label="Epochs"
-							onValueChange={(value) =>
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							onValueChange={(value: any) =>
 								setGan({
 									...gan,
 									hyperparameters: {
 										...gan.hyperparameters,
-										epochs: value[0],
+										noiseDim: value[0],
 									},
 								})
 							}
@@ -49,8 +46,9 @@ export function EpochSelector() {
 					className="w-[260px] text-sm"
 					side="left"
 				>
-					Control diversity via nucleus sampling: 0.5 means half of all
-					likelihood-weighted options are considered.
+					The maximum number of tokens to generate. Requests can use up to
+					2,048 or 4,000 tokens, shared between prompt and completion. The
+					exact limit varies by model.
 				</HoverCardContent>
 			</HoverCard>
 		</div>
