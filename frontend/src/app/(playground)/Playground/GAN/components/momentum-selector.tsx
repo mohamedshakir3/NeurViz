@@ -12,7 +12,7 @@ import { Slider } from "@/components/ui/slider"
 import { useGan } from "@/components/GanProvider"
 import { cn } from "@/lib/utils"
 
-export function EpochSelector() {
+export function MomentumSelector() {
 	const { gan, setGan } = useGan()!
 
 	return (
@@ -21,7 +21,7 @@ export function EpochSelector() {
 				<HoverCardTrigger asChild>
 					<div className="grid gap-4">
 						<div className="flex items-center justify-between">
-							<Label htmlFor="top-p">Epochs</Label>
+							<Label htmlFor="top-p">Momentum</Label>
 							<span
 								className={cn(
 									"w-12rounded-md border border-transparent",
@@ -29,14 +29,14 @@ export function EpochSelector() {
 									"text-muted-foreground hover:border-border"
 								)}
 							>
-								{gan.hyperparameters.epochs}
+								{gan.hyperparameters.momentum}
 							</span>
 						</div>
 						<Slider
-							defaultValue={[gan.hyperparameters.epochs]}
-							max={200}
-							min={10}
-							step={10}
+							defaultValue={[gan.hyperparameters.momentum]}
+							max={1}
+							min={0}
+							step={0.01}
 							className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
 							aria-label="Epochs"
 							onValueChange={(value) =>
@@ -44,7 +44,7 @@ export function EpochSelector() {
 									...gan,
 									hyperparameters: {
 										...gan.hyperparameters,
-										epochs: value[0],
+										momentum: value[0],
 									},
 								})
 							}
@@ -56,7 +56,7 @@ export function EpochSelector() {
 					className="w-[260px] text-sm"
 					side="left"
 				>
-					Set the number of epochs to train the model.
+					Control the momentum of the optimizer.
 				</HoverCardContent>
 			</HoverCard>
 		</div>

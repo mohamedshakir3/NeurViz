@@ -1,51 +1,51 @@
-"use server";
-import { cookies } from "next/headers";
-import { db } from "@/lib/firebase";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+"use server"
+import { cookies } from "next/headers"
+import { db } from "@/lib/firebase"
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function storeGan(gan: any) {
-	const cookieStore = await cookies();
-	cookieStore.set("gan", JSON.stringify(gan));
+	const cookieStore = await cookies()
+	cookieStore.set("gan", JSON.stringify(gan))
 }
 
 export async function getSession() {
-	const cookieStore = await cookies();
+	const cookieStore = await cookies()
 
-	const session = cookieStore.get("gan")?.value;
-	if (!session) return null;
-	return JSON.parse(session);
+	const session = cookieStore.get("gan")?.value
+	if (!session) return null
+	return JSON.parse(session)
 }
 
 export async function checkJob(JobID: string) {
-	const docRef = doc(db, "Jobs", JobID);
-	const docSnap = await getDoc(docRef);
+	const docRef = doc(db, "Jobs", JobID)
+	const docSnap = await getDoc(docRef)
 
-	return docSnap.exists() ? true : false;
+	return docSnap.exists() ? true : false
 }
 
 export async function initializeJob(JobID: string) {
-	const gan = await getSession();
+	const gan = await getSession()
 	if (!gan) {
-		return null;
+		return null
 	}
 	await setDoc(doc(db, "Jobs", JobID), {
 		...gan,
 		epochs: [],
 		isTraining: false,
-	});
+	})
 
-	return { ...gan, epochs: [], isTraining: false };
+	return { ...gan, epochs: [], isTraining: false }
 }
 
 export async function trainModel(JobID: string) {
-	const gan = await getSession();
+	const gan = await getSession()
 
 	await updateDoc(doc(db, "Jobs", JobID), {
 		isTraining: true,
-	});
+	})
 	if (!gan) {
-		return null;
+		return null
 	}
 	try {
 		const response = await fetch(`${process.env.BACKEND_AUTH}Train`, {
@@ -54,27 +54,27 @@ export async function trainModel(JobID: string) {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({ gan, JobID }),
-		});
+		})
 
 		if (!response.ok) {
-			console.log(response);
-			throw new Error(`HTTP error! status: ${response.status}`);
+			console.log(response)
+			throw new Error(`HTTP error! status: ${response.status}`)
 		}
 
-		const data = await response.json();
-		console.log("Model trained successfully:", data);
+		const data = await response.json()
+		console.log("Model trained successfully:", data)
 	} catch (error) {
-		console.error("Failed to train model:", error);
+		console.error("Failed to train model:", error)
 	}
 }
 
 export async function getJobById(jobID: string) {
-	const jobRef = doc(db, "Jobs", jobID);
-	const jobSnapshot = await getDoc(jobRef);
+	const jobRef = doc(db, "Jobs", jobID)
+	const jobSnapshot = await getDoc(jobRef)
 	if (!jobSnapshot.exists()) {
-		return null;
+		return null
 	}
-	return jobSnapshot.data();
+	return jobSnapshot.data()
 }
 
 // export async function sub(collection: string, docId: string) {

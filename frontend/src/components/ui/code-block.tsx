@@ -1,28 +1,28 @@
-"use client";
-import React from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { IconCheck, IconCopy } from "@tabler/icons-react";
+"use client"
+import React from "react"
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import { IconCheck, IconCopy } from "@tabler/icons-react"
 
 type CodeBlockProps = {
-	language: string;
-	filename: string;
-	highlightLines?: number[];
+	language: string
+	filename: string
+	highlightLines?: number[]
 } & (
 	| {
-			code: string;
-			tabs?: never;
+			code: string
+			tabs?: never
 	  }
 	| {
-			code?: never;
+			code?: never
 			tabs: Array<{
-				name: string;
-				code: string;
-				language?: string;
-				highlightLines?: number[];
-			}>;
+				name: string
+				code: string
+				language?: string
+				highlightLines?: number[]
+			}>
 	  }
-);
+)
 
 export const CodeBlock = ({
 	language,
@@ -31,30 +31,30 @@ export const CodeBlock = ({
 	highlightLines = [],
 	tabs = [],
 }: CodeBlockProps) => {
-	const [copied, setCopied] = React.useState(false);
-	const [activeTab, setActiveTab] = React.useState(0);
+	const [copied, setCopied] = React.useState(false)
+	const [activeTab, setActiveTab] = React.useState(0)
 
-	const tabsExist = tabs.length > 0;
+	const tabsExist = tabs.length > 0
 
 	const copyToClipboard = async () => {
-		const textToCopy = tabsExist ? tabs[activeTab].code : code;
+		const textToCopy = tabsExist ? tabs[activeTab].code : code
 		if (textToCopy) {
-			await navigator.clipboard.writeText(textToCopy);
-			setCopied(true);
-			setTimeout(() => setCopied(false), 2000);
+			await navigator.clipboard.writeText(textToCopy)
+			setCopied(true)
+			setTimeout(() => setCopied(false), 2000)
 		}
-	};
+	}
 
-	const activeCode = tabsExist ? tabs[activeTab].code : code;
+	const activeCode = tabsExist ? tabs[activeTab].code : code
 	const activeLanguage = tabsExist
 		? tabs[activeTab].language || language
-		: language;
+		: language
 	const activeHighlightLines = tabsExist
 		? tabs[activeTab].highlightLines || []
-		: highlightLines;
+		: highlightLines
 
 	return (
-		<div className="relative w-full rounded-lg bg-slate-900 p-4 font-mono text-sm">
+		<div className="relative w-full rounded-lg bg-slate-900 p-4 font-mono text-sm overflow-auto max-h-[60vh]">
 			<div className="flex flex-col gap-2">
 				{tabsExist && (
 					<div className="flex justify-between overflow-x-auto">
@@ -110,5 +110,5 @@ export const CodeBlock = ({
 				{String(activeCode)}
 			</SyntaxHighlighter>
 		</div>
-	);
-};
+	)
+}

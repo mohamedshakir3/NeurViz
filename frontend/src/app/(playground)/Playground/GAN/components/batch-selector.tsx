@@ -12,7 +12,7 @@ import { Slider } from "@/components/ui/slider"
 import { useGan } from "@/components/GanProvider"
 import { cn } from "@/lib/utils"
 
-export function EpochSelector() {
+export function BatchSelector() {
 	const { gan, setGan } = useGan()!
 
 	return (
@@ -21,7 +21,7 @@ export function EpochSelector() {
 				<HoverCardTrigger asChild>
 					<div className="grid gap-4">
 						<div className="flex items-center justify-between">
-							<Label htmlFor="top-p">Epochs</Label>
+							<Label htmlFor="top-p">Batch</Label>
 							<span
 								className={cn(
 									"w-12rounded-md border border-transparent",
@@ -29,11 +29,11 @@ export function EpochSelector() {
 									"text-muted-foreground hover:border-border"
 								)}
 							>
-								{gan.hyperparameters.epochs}
+								{gan.hyperparameters.batchSize}
 							</span>
 						</div>
 						<Slider
-							defaultValue={[gan.hyperparameters.epochs]}
+							defaultValue={[gan.hyperparameters.batchSize]}
 							max={200}
 							min={10}
 							step={10}
@@ -44,7 +44,7 @@ export function EpochSelector() {
 									...gan,
 									hyperparameters: {
 										...gan.hyperparameters,
-										epochs: value[0],
+										batchSize: value[0],
 									},
 								})
 							}
@@ -56,7 +56,8 @@ export function EpochSelector() {
 					className="w-[260px] text-sm"
 					side="left"
 				>
-					Set the number of epochs to train the model.
+					Control diversity via nucleus sampling: 0.5 means half of all
+					likelihood-weighted options are considered.
 				</HoverCardContent>
 			</HoverCard>
 		</div>

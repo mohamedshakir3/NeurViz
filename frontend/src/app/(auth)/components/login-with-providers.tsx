@@ -1,6 +1,26 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { signInWithGoogle } from "@/lib/auth-actions"
+import { createClient } from "@/utils/supabase/client"
+import { redirect } from "next/navigation"
+
+const signInWithGoogle = async () => {
+	const supabase = createClient()
+	const { data, error } = await supabase.auth.signInWithOAuth({
+		provider: "google",
+		options: {
+			queryParams: {
+				access_type: "offline",
+				prompt: "consent",
+			},
+		},
+	})
+
+	if (error) {
+		redirect("/error")
+	}
+
+	redirect(data.url)
+}
 export function LoginWithGoogle() {
 	return (
 		<Button

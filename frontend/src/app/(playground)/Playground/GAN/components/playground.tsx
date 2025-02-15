@@ -29,6 +29,8 @@ import { PresetSave } from "./preset-save"
 import { PresetSelector, presets } from "./preset-selector"
 import { PresetShare } from "./preset-share"
 import { LearningSelector } from "./learning-selector"
+import { BatchSelector } from "./batch-selector"
+import { MomentumSelector } from "./momentum-selector"
 import { EpochSelector } from "./epoch-selector"
 import { useGan } from "@/components/GanProvider"
 import {
@@ -75,6 +77,8 @@ export default function Playground() {
 										<LearningSelector />
 										<NoiseDimSelector />
 										<EpochSelector />
+										<BatchSelector />
+										<MomentumSelector />
 									</AccordionContent>
 								</AccordionItem>
 							</Accordion>
