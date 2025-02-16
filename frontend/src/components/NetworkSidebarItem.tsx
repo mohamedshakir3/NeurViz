@@ -54,7 +54,7 @@ export function GeneratorMenuItem() {
 									<span className="flex justify-start">
 										<span>{layer.type}</span>
 										<span className="hidden md:inline text-slate-400">
-											Channels: {layer.channels}
+											Channels: {layer.out_channels}
 										</span>
 										{layer.type === "Conv2d" ? (
 											<>
@@ -142,7 +142,7 @@ export function DiscriminatorMenuItem() {
 									<span className="flex justify-start">
 										<span>{layer.type}</span>
 										<span className="hidden md:inline text-slate-400">
-											Channels: {layer.channels}
+											Channels: {layer.out_channels}
 										</span>
 
 										{layer.type === "Conv2d" ? (

@@ -24,7 +24,8 @@ import { Label } from "@/components/ui/label"
 import type { Layer } from "@/types/NeuralNet"
 
 export default function CreateLayerModal({ network }: { network: string }) {
-	const [channels, setChannels] = useState<number>(1024)
+	const [in_channels, setInChannels] = useState<number>(1024)
+	const [out_channels, setOutChannels] = useState<number>(1024)
 	const [activation, setActivation] = useState<string>("ReLU")
 	const [kernel, setKernel] = useState<number>(4)
 	const [stride, setStride] = useState<number>(2)
@@ -35,13 +36,15 @@ export default function CreateLayerModal({ network }: { network: string }) {
 		if (type === "Dense") {
 			newLayer = {
 				type,
-				channels,
+				in_channels,
+				out_channels,
 				activation,
 			}
 		} else {
 			newLayer = {
 				type,
-				channels,
+				in_channels,
+				out_channels,
 				kernel,
 				stride,
 				activation,
@@ -49,13 +52,13 @@ export default function CreateLayerModal({ network }: { network: string }) {
 		}
 		if (network == "generator") {
 			setGan({ ...gan, generator: [...gan.generator, newLayer] })
-		} else if (network == "discriminator") {
-			setGan({ ...gan, generator: [...gan.generator, newLayer] })
+		} else {
+			setGan({ ...gan, discriminator: [...gan.discriminator, newLayer] })
 		}
 	}
 	return (
 		<>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className="sm:max-w-[525px]">
 				<DialogHeader>
 					<DialogTitle>Create Dense Layer</DialogTitle>
 					<DialogDescription>
@@ -117,14 +120,26 @@ export default function CreateLayerModal({ network }: { network: string }) {
 					</div>
 					<div className="grid grid-cols-4 items-center gap-4">
 						<Label htmlFor="channels" className="text-right">
-							Channels
+							In Channels
 						</Label>
 						<Input
 							id="channels"
 							placeholder="1024"
 							type="number"
 							className="col-span-3"
-							onChange={(e) => setChannels(Number(e.target.value))}
+							onChange={(e) => setInChannels(Number(e.target.value))}
+						/>
+					</div>
+					<div className="grid grid-cols-4 items-center gap-4">
+						<Label htmlFor="channels" className="text-right">
+							Out Channels
+						</Label>
+						<Input
+							id="channels"
+							placeholder="1024"
+							type="number"
+							className="col-span-3"
+							onChange={(e) => setOutChannels(Number(e.target.value))}
 						/>
 					</div>
 					<div className="grid grid-cols-4 items-center gap-4">

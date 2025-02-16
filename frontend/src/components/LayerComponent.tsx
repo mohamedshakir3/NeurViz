@@ -1,4 +1,4 @@
-import type { Layer, ConvLayer } from "@/types/NeuralNet";
+import type { Layer, ConvLayer } from "@/types/NeuralNet"
 export default function DenseLayerComponent({ layer }: { layer: Layer }) {
 	return (
 		<div className="p-4 bg-slate-100 rounded-lg flex items-center justify between">
@@ -14,10 +14,10 @@ export default function DenseLayerComponent({ layer }: { layer: Layer }) {
 						) : (
 							""
 						)}
-						Channels: {layer.channels}, Activation: {layer.activation}
+						Channels: {layer.out_channels}, Activation: {layer.activation}
 					</div>
 				</div>
 			</div>
 		</div>
-	);
+	)
 }

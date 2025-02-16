@@ -11,7 +11,7 @@ export async function Header() {
 		<div className="border-b">
 			<div className="flex h-16 items-center px-4">
 				<TeamSwitcher profile={profile} />
-				<MainNav className="mx-6" />
+				<MainNav className="hidden sm:flex mx-6" />
 				<div className="ml-auto flex items-center space-x-4">
 					<div className="hidden md:flex">
 						<SearchInput />

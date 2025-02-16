@@ -1,12 +1,17 @@
 "use client"
-import { History, ChevronRight } from "lucide-react"
+import { History, ChevronRight, MoreHorizontal } from "lucide-react"
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
-
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Fragment } from "react"
 import {
@@ -17,6 +22,7 @@ import {
 	Tanh,
 	Sigmoid,
 	LeakyReLU,
+	PReLU,
 } from "@/components/LayerSvg"
 
 import { Separator } from "@/components/ui/separator"
@@ -33,6 +39,7 @@ import { BatchSelector } from "./batch-selector"
 import { MomentumSelector } from "./momentum-selector"
 import { EpochSelector } from "./epoch-selector"
 import { useGan } from "@/components/GanProvider"
+import { Layer, ConvLayer } from "@/types/NeuralNet"
 import {
 	Accordion,
 	AccordionContent,
@@ -43,9 +50,24 @@ import {
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 
 import CreateLayerModal from "@/components/CreateLayerModal"
+import { GanMenu } from "./network-menu"
+import {
+	HoverCard,
+	HoverCardTrigger,
+	HoverCardContent,
+} from "@/components/ui/hover-card"
 
 export default function Playground() {
-	const { gan } = useGan()!
+	const { gan, setGan } = useGan()!
+	const deleteGenLayer = (index: number) => {
+		const newLayers = gan.generator.filter((layer, idx) => {
+			return idx != index
+		})
+		setGan({
+			...gan,
+			generator: newLayers,
+		})
+	}
 	return (
 		<>
 			<div className="h-full flex flex-col">
@@ -86,7 +108,8 @@ export default function Playground() {
 								<AccordionItem value="network">
 									<AccordionTrigger>Network</AccordionTrigger>
 									<AccordionContent>
-										<Dialog>
+										<GanMenu />
+										{/* <Dialog>
 											<DialogTrigger asChild>
 												<Button className="flex justify-start">
 													Add Layer
@@ -94,7 +117,7 @@ export default function Playground() {
 												</Button>
 											</DialogTrigger>
 											<CreateLayerModal network={"generator"} />
-										</Dialog>
+										</Dialog> */}
 									</AccordionContent>
 								</AccordionItem>
 							</Accordion>
@@ -125,21 +148,54 @@ export default function Playground() {
 															</TooltipContent>
 														</Tooltip>
 													</TooltipProvider>
-													{gan.generator.map((layer, index) => (
+													{gan.generator.map((layer: Layer, index: number) => (
 														<Fragment key={index}>
-															{layer.type == "Dense" ? (
-																<Dense key={index + "dense"} />
-															) : layer.type == "Conv2d" ? (
-																<Conv key={index + "conv2d"} />
-															) : (
-																""
-															)}
+															<HoverCard>
+																<HoverCardTrigger>
+																	{layer.type == "Dense" ? (
+																		<Dense key={index + "dense"} />
+																	) : layer.type == "Conv2d" ? (
+																		<Conv key={index + "conv2d"} />
+																	) : (
+																		""
+																	)}
+																</HoverCardTrigger>
+																<HoverCardContent
+																	align="start"
+																	className="w-full text-sm"
+																	side="top"
+																	key={index}
+																>
+																	<div className="flex gap-2 flex-col">
+																		<span>
+																			In Channels: {layer.in_channels}
+																		</span>
+																		<span>
+																			Out Channels: {layer.out_channels}
+																		</span>
+																		{layer.type == "Conv2d" && (
+																			<>
+																				<span>
+																					Stride: {(layer as ConvLayer).stride}
+																				</span>
+																				<span>
+																					Kernel: {(layer as ConvLayer).kernel}
+																				</span>
+																			</>
+																		)}
+																	</div>
+																</HoverCardContent>
+															</HoverCard>
 															{layer.activation == "ReLU" ? (
 																<ReLU key={index + "relu"} />
 															) : layer.activation == "Tanh" ? (
 																<Tanh key={index + "tanh"} />
 															) : layer.activation == "Sigmoid" ? (
 																<Sigmoid key={index + "sigmoid"} />
+															) : layer.activation == "PReLU" ? (
+																<PReLU key={index + "prelu"} />
+															) : layer.activation == "LeakyReLU" ? (
+																<LeakyReLU key={index + "leakyrelu"} />
 															) : (
 																""
 															)}
@@ -149,19 +205,50 @@ export default function Playground() {
 												<div className="flex items-center">
 													{gan.discriminator.map((layer, index) => (
 														<Fragment key={index}>
-															{layer.type == "Dense" ? (
-																<Dense key={index + "dense"} />
-															) : layer.type == "Conv2d" ? (
-																<Conv key={index + "conv2d"} />
-															) : (
-																""
-															)}
+															<HoverCard>
+																<HoverCardTrigger>
+																	{layer.type == "Dense" ? (
+																		<Dense key={index + "dense"} />
+																	) : layer.type == "Conv2d" ? (
+																		<Conv key={index + "conv2d"} />
+																	) : (
+																		""
+																	)}
+																</HoverCardTrigger>
+																<HoverCardContent
+																	align="start"
+																	className="w-full text-sm"
+																	side="top"
+																	key={index}
+																>
+																	<div className="flex gap-2 flex-col">
+																		<span>
+																			In Channels: {layer.in_channels}
+																		</span>
+																		<span>
+																			Out Channels: {layer.out_channels}
+																		</span>
+																		{layer.type == "Conv2d" && (
+																			<>
+																				<span>
+																					Stride: {(layer as ConvLayer).stride}
+																				</span>
+																				<span>
+																					Kernel: {(layer as ConvLayer).kernel}
+																				</span>
+																			</>
+																		)}
+																	</div>
+																</HoverCardContent>
+															</HoverCard>
 															{layer.activation == "ReLU" ? (
 																<ReLU key={index + "relu"} />
 															) : layer.activation == "Tanh" ? (
 																<Tanh key={index + "tanh"} />
 															) : layer.activation == "Sigmoid" ? (
 																<Sigmoid key={index + "sigmoid"} />
+															) : layer.activation == "PReLU" ? (
+																<PReLU key={index + "prelu"} />
 															) : layer.activation == "LeakyReLU" ? (
 																<LeakyReLU key={index + "leakyrelu"} />
 															) : (
