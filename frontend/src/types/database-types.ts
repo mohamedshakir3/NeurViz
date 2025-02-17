@@ -9,13 +9,40 @@ export type Json =
 export type Database = {
 	public: {
 		Tables: {
+			models: {
+				Row: {
+					id: number
+					model: Json | null
+					owner: string | null
+				}
+				Insert: {
+					id?: number
+					model?: Json | null
+					owner?: string | null
+				}
+				Update: {
+					id?: number
+					model?: Json | null
+					owner?: string | null
+				}
+				Relationships: [
+					{
+						foreignKeyName: "models_owner_fkey"
+						columns: ["owner"]
+						isOneToOne: false
+						referencedRelation: "Profiles"
+						referencedColumns: ["id"]
+					}
+				]
+			}
 			Profiles: {
 				Row: {
 					avatar_url: string | null
 					email: string
 					full_name: string
 					id: string
-					models: string[] | null
+					models: number[] | null
+					saved_presets: Json[] | null
 					teams: string[] | null
 				}
 				Insert: {
@@ -23,7 +50,8 @@ export type Database = {
 					email: string
 					full_name: string
 					id: string
-					models?: string[] | null
+					models?: number[] | null
+					saved_presets?: Json[] | null
 					teams?: string[] | null
 				}
 				Update: {
@@ -31,8 +59,30 @@ export type Database = {
 					email?: string
 					full_name?: string
 					id?: string
-					models?: string[] | null
+					models?: number[] | null
+					saved_presets?: Json[] | null
 					teams?: string[] | null
+				}
+				Relationships: []
+			}
+			teams: {
+				Row: {
+					created_at: string | null
+					id: string
+					members: string[] | null
+					models: string[] | null
+				}
+				Insert: {
+					created_at?: string | null
+					id?: string
+					members?: string[] | null
+					models?: string[] | null
+				}
+				Update: {
+					created_at?: string | null
+					id?: string
+					members?: string[] | null
+					models?: string[] | null
 				}
 				Relationships: []
 			}
