@@ -3,6 +3,12 @@ import { createClient } from "@/utils/supabase/server"
 import { type Tables, Database } from "@/types/database-types"
 import { getCurrentUser } from "@/lib/auth-actions"
 
+export type JobSummary = {
+	id: string
+	status: string
+	created_at: string
+}
+
 export async function getProfileByID(id: string): Promise<Tables<"Profiles">> {
 	const supabase = await createClient()
 	const { data, error } = await supabase
@@ -43,4 +49,27 @@ export async function getModelByID(id: string): Promise<Tables<"models">> {
 	if (error) throw error
 	const model: Tables<"models"> = data!
 	return model
+}
+
+export async function getJobsByOwnerId(id: string): Promise<JobSummary[]> {
+	const supabase = await createClient()
+	const { data, error } = await supabase
+		.from("jobs")
+		.select("id, status, created_at")
+		.eq("owner_id", id)
+	if (error) throw error
+	const jobs: JobSummary[] = data!
+	return jobs
+}
+
+export async function getJobById(id: string): Promise<Tables<"jobs">> {
+	const supabase = await createClient()
+	const { data, error } = await supabase
+		.from("jobs")
+		.select("*")
+		.eq("id", id)
+		.single()
+	if (error) throw error
+	const jobs: Tables<"jobs"> = data!
+	return jobs
 }

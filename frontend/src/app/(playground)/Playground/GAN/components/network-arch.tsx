@@ -1,4 +1,3 @@
-import { useGan } from "@/components/GanProvider"
 import {
 	Noise,
 	ReLU,
@@ -22,8 +21,7 @@ import {
 	HoverCardContent,
 } from "@/components/ui/hover-card"
 import { type Layer, type ConvLayer } from "@/types/NeuralNet"
-export default function NetworkArch() {
-	const { gan } = useGan()!
+export default function NetworkArch({ model }: { model: any }) {
 	return (
 		<div className="grid place-items-center content-center w-full h-full gap-24">
 			<div className="flex items-center">
@@ -33,11 +31,11 @@ export default function NetworkArch() {
 							<Noise />
 						</TooltipTrigger>
 						<TooltipContent>
-							<p>Dimension: {gan.hyperparameters.noiseDim}</p>
+							<p>Dimension: {model.hyperparameters?.noiseDim}</p>
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
-				{gan.generator.map((layer: Layer, index: number) => (
+				{model.generator?.map((layer: Layer, index: number) => (
 					<Fragment key={index}>
 						<HoverCard>
 							<HoverCardTrigger>
@@ -84,7 +82,7 @@ export default function NetworkArch() {
 				))}
 			</div>
 			<div className="flex items-center">
-				{gan.discriminator.map((layer, index) => (
+				{model.discriminator?.map((layer: any, index: number) => (
 					<Fragment key={index}>
 						<HoverCard>
 							<HoverCardTrigger>

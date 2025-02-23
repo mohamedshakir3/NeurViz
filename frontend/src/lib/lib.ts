@@ -2,6 +2,12 @@
 import { cookies } from "next/headers"
 import { db } from "@/lib/firebase"
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore"
+import { getCurrentUser } from "./auth-actions"
+import { createClient } from "@/utils/supabase/server"
+import type { trainTask } from "@/trigger/train"
+import { tasks } from "@trigger.dev/sdk/v3"
+import { redirect } from "next/navigation"
+import { revalidatePath } from "next/cache"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function storeGan(gan: any) {
@@ -38,34 +44,63 @@ export async function initializeJob(JobID: string) {
 	return { ...gan, epochs: [], isTraining: false }
 }
 
-export async function trainModel(JobID: string) {
-	const gan = await getSession()
-
-	await updateDoc(doc(db, "Jobs", JobID), {
-		isTraining: true,
-	})
+export async function trainModel(gan: any) {
 	if (!gan) {
-		return null
+		throw new Error("No GAN model found!")
+	}
+
+	const supabase = await createClient()
+	const user = await getCurrentUser()
+
+	// Insert job details into Supabase
+	const { data, error } = await supabase
+		.from("jobs")
+		.insert([{ status: "pending", owner_id: user.user.id, model_params: gan }])
+		.select()
+
+	if (error || !data || data.length === 0) {
+		console.log(error)
+		throw new Error("Error creating job in Supabase")
+	}
+
+	const jobId = data[0].id
+
+	return { message: `Training started! Job ID: ${jobId}` }
+}
+
+export async function train(gan: any) {
+	const supabase = await createClient()
+	const user = await getCurrentUser()
+
+	// Insert job details into Supabase
+	const { data, error } = await supabase
+		.from("jobs")
+		.insert([{ status: "pending", owner_id: user.user.id, model_params: gan }])
+		.select()
+
+	if (error || !data || data.length === 0) {
+		console.log(error)
+		throw new Error("Error creating job in Supabase")
+	}
+
+	const jobId = data[0].id
+	// should return jobId here to front end
+	if (!jobId) {
+		console.error("Invalid jobId:", jobId)
+		return
 	}
 	try {
-		const response = await fetch(`${process.env.BACKEND_AUTH}Train`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ gan, JobID }),
+		const handle = await tasks.trigger<typeof trainTask>("train-gan", {
+			jobId,
 		})
-
-		if (!response.ok) {
-			console.log(response)
-			throw new Error(`HTTP error! status: ${response.status}`)
-		}
-
-		const data = await response.json()
-		console.log("Model trained successfully:", data)
+		console.log(handle)
 	} catch (error) {
-		console.error("Failed to train model:", error)
+		console.error(error)
+		return {
+			error: "something went wrong",
+		}
 	}
+	redirect(`/Dashboard/${jobId}`)
 }
 
 export async function getJobById(jobID: string) {
@@ -76,9 +111,3 @@ export async function getJobById(jobID: string) {
 	}
 	return jobSnapshot.data()
 }
-
-// export async function sub(collection: string, docId: string) {
-// 	const unsub = onSnapshot(doc(db, collection, docId), (doc) => {
-// 		console.log("Current data: ", doc.data());
-// 	});
-// }

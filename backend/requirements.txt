@@ -1,6 +1,4 @@
-flask
-flask-cors
 torch
 torchvision
 python-dotenv
-firebase-admin
+supabase

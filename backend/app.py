@@ -1,24 +1,38 @@
-from flask import Flask, request
-from flask_cors import CORS
 from gan_utils import GAN
-from dotenv import load_dotenv 
+from fastapi import FastAPI
+import time
+import os
+from supabase import create_client
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-load_dotenv()
+app = FastAPI()
 
-app = Flask(__name__)
+@app.post("/train")
+def start_training(request: dict):
+    model_data = request.get("model_data")
+    job_id = model_data.get("job_id")
 
-@app.route("/", methods=["GET"])
-def get():
-    return { "Status" : "API Running!" }
+    if not job_id:
+        return {"error": "Job ID required"}
 
-@app.route("/Train", methods=["POST"])
-def train_model():
-    request_data = request.get_json()
-    gan_data = request_data["gan"]
-    jobID = request_data['JobID']
-    gan = GAN(gan_data)
-    gan.train(jobID)
+    train_model(job_id, model_data)
+    return {"status": "started", "job_id": job_id}
+
+
+def start_training(request: dict):
+    model_data = request.get("model_data")
+    job_id = model_data.get("job_id")
+
+    if not job_id:
+        return {"error": "Job ID required"}
+
+    # Start training asynchronously
+    train_model(job_id, model_data)
+    return {"status": "started", "job_id": job_id}
+
+def train_model(job_id, model_data):
+    gan = GAN(model_data)
+    gan.train(job_id)
     return { "res" : "Successfully trained!" }
-    
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5100)

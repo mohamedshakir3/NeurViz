@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { taskSchema } from "./schema"
+import Link from "next/link"
 
 interface DataTableRowActionsProps<TData> {
 	row: Row<TData>
@@ -28,7 +29,6 @@ export function DataTableRowActions<TData>({
 	row,
 }: DataTableRowActionsProps<TData>) {
 	const task = taskSchema.parse(row.original)
-
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -41,6 +41,9 @@ export function DataTableRowActions<TData>({
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[160px]">
+				<Link href={`/Dashboard/${task.id}`}>
+					<DropdownMenuItem>View</DropdownMenuItem>
+				</Link>
 				<DropdownMenuItem>Edit</DropdownMenuItem>
 				<DropdownMenuItem>Make a copy</DropdownMenuItem>
 				<DropdownMenuItem>Favorite</DropdownMenuItem>

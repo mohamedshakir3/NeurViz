@@ -7,18 +7,9 @@ import {
 	DialogTitle,
 	DialogClose,
 } from "@/components/ui/dialog"
-import path from "path"
-import { Metadata } from "next"
-import { z } from "zod"
 
 import { columns } from "./columns"
 import { DataTable } from "./data-table"
-import { taskSchema } from "./schema"
-
-export const metadata: Metadata = {
-	title: "Tasks",
-	description: "A task and issue tracker build using Tanstack Table.",
-}
 
 export default function HistoryModal({ tasks }: { tasks: any }) {
 	return (

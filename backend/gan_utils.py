@@ -1,20 +1,16 @@
-import torch 
-import torch.nn as nn 
-import torch.optim as optim 
-import torchvision 
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torchvision
 import torchvision.datasets as datasets
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
-import firebase_admin
-from firebase_admin import credentials, firestore
-import os 
+import os
+from supabase import create_client
 
-load_dotenv()
-
-cred = credentials.Certificate("neurviz-firebase-adminsdk-s410y-2d738e85aa.json")
-firebase_app = firebase_admin.initialize_app(cred)
-db = firestore.client()
-
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 class Discriminator(nn.Module): 
     def __init__(self, layers):
@@ -120,6 +116,7 @@ class GAN():
         return res
 
     def train(self, jobID):
+        
         jobRef = db.collection("Jobs").document(jobID)        
         
         mean, std = 0.5, 0.5
@@ -159,9 +156,8 @@ class GAN():
                 
                 if batch == 0:
                     new_epoch = { "gen_loss": gen_loss.item(), "disc_loss" : total_loss.item() }
-                    jobRef.update({
-                        "epochs" : firestore.ArrayUnion([new_epoch])
-                    })
+                    supabase.table("Jobs").update({
+                        "epochs": supabase.func("array_append", "epochs", new_epoch)
+                    }).eq("id", jobID).execute()
                     print(f"Epoch: {epoch}, Generator Loss: {gen_loss.item()}, Discriminator Loss: {total_loss.item()}")
-        
-        jobRef.update({ "isTraining": False })
+        supabase.table("Jobs").update({ "isTraining": False }).eq("id", jobID).execute()

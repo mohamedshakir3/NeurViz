@@ -8,23 +8,23 @@ import {
 
 export const statuses = [
 	{
-		value: "backlog",
-		label: "Backlog",
+		value: "pending",
+		label: "Pending",
 		icon: HelpCircle,
 	},
 	{
-		value: "in progress",
-		label: "In Progress",
+		value: "running",
+		label: "Running",
 		icon: Timer,
 	},
 	{
-		value: "done",
-		label: "Done",
+		value: "completed",
+		label: "Completed",
 		icon: CheckCircle,
 	},
 	{
-		value: "canceled",
-		label: "Canceled",
+		value: "failed",
+		label: "Failed",
 		icon: CircleOff,
 	},
 ]

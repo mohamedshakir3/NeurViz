@@ -1,0 +1,30 @@
+import { task, logger } from "@trigger.dev/sdk/v3"
+import { createClient } from "@/utils/supabase/server"
+import { getCurrentUser } from "@/lib/auth-actions"
+
+export const trainTask = task({
+	id: "train-gan",
+	// Set an optional maxDuration to prevent tasks from running indefinitely
+	maxDuration: 600, // Stop executing after 300 secs (5 mins) of compute
+	run: async (payload: { jobId: any }) => {
+		const { jobId } = payload
+		const response = await fetch(`http://localhost:8000/train/${jobId}`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+		})
+		if (response.ok) {
+			logger.log("Model submitted successfully", { jobId })
+			return { success: true }
+		} else {
+			logger.error("Path revalidation failed", {
+				jobId,
+				statusCode: response.status,
+				statusText: response.statusText,
+			})
+			return {
+				success: false,
+				error: `Revalidation failed with status ${response.status}: ${response.statusText}`,
+			}
+		}
+	},
+})

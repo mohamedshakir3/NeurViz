@@ -15,7 +15,6 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 export function UserNav({ profile }: { profile: Tables<"Profiles"> }) {
-	console.log(profile)
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>

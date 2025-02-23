@@ -10,18 +10,21 @@ import { DataTableRowActions } from "./data-table-row-actions"
 export const columns: ColumnDef<Task>[] = [
 	{
 		id: "select",
-		enableSorting: false,
+		enableSorting: true,
 		enableHiding: false,
 	},
 	{
-		accessorKey: "date",
+		accessorKey: "created_at",
 		header: ({ column }) => (
 			<DataTableColumnHeader column={column} title="Date Submitted" />
 		),
 		cell: ({ row }) => {
+			const date = new Date(row.getValue("created_at"))
 			return (
 				<div className="flex w-full">
-					<span className="truncate font-medium">{row.getValue("date")}</span>
+					<span className="truncate font-medium">
+						{date.toISOString().split("T")[0]}
+					</span>
 				</div>
 			)
 		},

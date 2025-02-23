@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
 	public: {
 		Tables: {
+			jobs: {
+				Row: {
+					created_at: string
+					epochs: Json[]
+					id: string
+					model_params: Json
+					owner_id: string | null
+					status: string
+					updated_at: string | null
+				}
+				Insert: {
+					created_at?: string | null
+					epochs?: string[] | null
+					id?: string
+					model_params: Json
+					owner_id?: string | null
+					status: string
+					updated_at?: string | null
+				}
+				Update: {
+					created_at?: string | null
+					epochs?: string[] | null
+					id?: string
+					model_params?: Json
+					owner_id?: string | null
+					status?: string
+					updated_at?: string | null
+				}
+				Relationships: []
+			}
 			models: {
 				Row: {
 					id: number

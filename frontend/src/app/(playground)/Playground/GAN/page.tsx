@@ -8,8 +8,6 @@ import { LearningSelector } from "./components/learning-selector"
 import { BatchSelector } from "./components/batch-selector"
 import { MomentumSelector } from "./components/momentum-selector"
 import { EpochSelector } from "./components/epoch-selector"
-import { promises as fs } from "fs"
-import path from "path"
 import {
 	Accordion,
 	AccordionContent,
@@ -20,22 +18,17 @@ import { taskSchema } from "./components/schema"
 import { GanMenu } from "./components/network-menu"
 import NetworkContainer from "./components/network-container"
 import { z } from "zod"
+import { getJobsByOwnerId } from "@/lib/db-actions"
+import { getCurrentUser } from "@/lib/auth-actions"
 
-async function getTasks() {
-	const data = await fs.readFile(
-		path.join(
-			process.cwd(),
-			"./src/app/(playground)/Playground/GAN/components/tasks.json"
-		)
-	)
-
-	const tasks = JSON.parse(data.toString())
-
-	return z.array(taskSchema).parse(tasks)
+async function getJobs() {
+	const user = await getCurrentUser()
+	const jobs = await getJobsByOwnerId(user.user.id)
+	return z.array(taskSchema).parse(jobs)
 }
 
 export default async function Playground() {
-	const tasks = await getTasks()
+	const jobs = await getJobs()
 	return (
 		<div className="h-full flex flex-col">
 			<div className="container flex max-w-full pl-8 pr-8 flex-col items-start justify-between space-y-2 py-4 sm:flex-row sm:items-center sm:space-y-0 md:h-16">
@@ -81,7 +74,7 @@ export default async function Playground() {
 						</Accordion>
 					</div>
 					<div className="md:order-1">
-						<NetworkContainer tasks={tasks} />
+						<NetworkContainer tasks={jobs} />
 					</div>
 				</div>
 			</div>
