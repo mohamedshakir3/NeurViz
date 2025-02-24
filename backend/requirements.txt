@@ -1,4 +1,5 @@
+fastapi
+uvicorn
 torch
 torchvision
-python-dotenv
 supabase

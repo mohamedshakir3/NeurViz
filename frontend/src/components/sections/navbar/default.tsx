@@ -31,7 +31,7 @@ export default function Navbar() {
 							Sign in
 						</Link>
 						<Button variant="default" asChild>
-							<a href={siteConfig.url}>Get Started</a>
+							<Link href={"/signup"}>Get Started</Link>
 						</Button>
 					</NavbarRight>
 				</NavbarComponent>

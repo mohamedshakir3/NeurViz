@@ -1,6 +1,6 @@
 from fastapi import FastAPI, BackgroundTasks
 from supabase import create_client
-from gan import GAN
+from train import GAN
 import json
 import os
 
