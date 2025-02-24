@@ -1,24 +1,9 @@
 import { Button } from "@/components/ui/button"
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { BrainCircuit, Disc, Dumbbell, Database } from "lucide-react"
-import { Epochs } from "../components/epochs"
 import { getJobById } from "@/lib/db-actions"
-import { AreaGraph } from "../components/area-graph"
 import { Model } from "../components/model"
 import { Tables } from "@/types/database-types"
 import Dashboard from "../components/dashboard-content"
-
-type Epoch = {
-	gen_loss: number
-	disc_loss: number
-}
 
 export default async function DashboardPage({
 	params,

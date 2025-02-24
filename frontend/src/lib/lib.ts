@@ -99,8 +99,9 @@ export async function train(gan: any) {
 		return {
 			error: "something went wrong",
 		}
+	} finally {
+		redirect(`/Dashboard/${jobId}`)
 	}
-	redirect(`/Dashboard/${jobId}`)
 }
 
 export async function getJobById(jobID: string) {

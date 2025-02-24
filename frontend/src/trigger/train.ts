@@ -1,6 +1,4 @@
 import { task, logger } from "@trigger.dev/sdk/v3"
-import { createClient } from "@/utils/supabase/server"
-import { getCurrentUser } from "@/lib/auth-actions"
 
 export const trainTask = task({
 	id: "train-gan",
@@ -10,6 +8,7 @@ export const trainTask = task({
 		const { jobId } = payload
 		const response = await fetch(`${process.env.TRAIN_API_ROUTE}/${jobId}`, {
 			method: "POST",
+			body: JSON.stringify({ jobId: jobId }),
 			headers: { "Content-Type": "application/json" },
 		})
 		if (response.ok) {

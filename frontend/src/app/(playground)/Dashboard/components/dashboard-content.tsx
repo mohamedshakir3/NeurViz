@@ -74,7 +74,7 @@ export default function Dashboard({ job }: { job: Tables<"jobs"> }) {
 					<CardContent>
 						<div className="text-2xl font-bold">
 							{Math.round(
-								((jobState.epochs.length > 0
+								(((jobState.epochs ?? []).length > 0
 									? (jobState.epochs[jobState.epochs.length - 1] as Epoch)
 											.gen_loss
 									: 0) ?? 0) * 1000
@@ -95,7 +95,7 @@ export default function Dashboard({ job }: { job: Tables<"jobs"> }) {
 					<CardContent>
 						<div className="text-2xl font-bold">
 							{Math.round(
-								((jobState.epochs.length > 0
+								(((jobState.epochs ?? []).length > 0
 									? (jobState.epochs[jobState.epochs.length - 1] as Epoch)
 											.disc_loss
 									: 0) ?? 0) * 1000
