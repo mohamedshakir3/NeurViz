@@ -8,7 +8,7 @@ export const trainTask = task({
 	maxDuration: 600, // Stop executing after 300 secs (5 mins) of compute
 	run: async (payload: { jobId: any }) => {
 		const { jobId } = payload
-		const response = await fetch(`http://localhost:8000/train/${jobId}`, {
+		const response = await fetch(`${process.env.TRAIN_API_ROUTE}/${jobId}`, {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 		})

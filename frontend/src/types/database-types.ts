@@ -6,6 +6,26 @@ export type Json =
 	| { [key: string]: Json | undefined }
 	| Json[]
 
+export type Layer = {
+	type: string
+	in_channels: number
+	out_channels: number
+}
+
+export type Hyperparameters = {
+	epochs: number
+	momentum: number
+	noiseDim: number
+	batchSize: number
+	learningRate: number
+}
+
+export type ModelParams = {
+	generator: Layer[]
+	discriminator: Layer[]
+	hyperparameters: Hyperparameters
+}
+
 export type Database = {
 	public: {
 		Tables: {

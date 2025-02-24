@@ -7,15 +7,12 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
-import { useEffect, useState } from "react"
 import {
 	ChartConfig,
 	ChartContainer,
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart"
-import supabase from "@/utils/supabase/supabase"
 import { type Tables } from "@/types/database-types"
 const chartConfig = {
 	gen_loss: {
@@ -33,49 +30,12 @@ type Epoch = {
 	disc_loss: number
 }
 
-export function AreaGraph({
-	jobId,
-	data,
-	job,
-}: {
-	job: Tables<"jobs">
-	jobId: string
-	data: any[]
-}) {
-	const [jobState, setJobState] = useState(job)
-	console.log(jobState)
-	var chartData = (jobState.epochs as Epoch[])?.map((epoch, index) => ({
+export function AreaGraph({ job }: { job: Tables<"jobs"> }) {
+	const chartData = ((job.epochs as Epoch[]) ?? []).map((epoch, index) => ({
 		id: index,
 		gen_loss: epoch?.gen_loss,
 		disc_loss: epoch?.disc_loss,
 	}))
-	useEffect(() => {
-		const channel = supabase
-			.channel("realtime jobs")
-			.on(
-				"postgres_changes",
-				{
-					event: "UPDATE",
-					schema: "public",
-					table: "jobs",
-					filter: `id=eq.${jobId}`,
-				},
-				(payload) => {
-					setJobState(payload.new as Tables<"jobs">)
-				}
-			)
-			.subscribe()
-		return () => {
-			supabase.removeChannel(channel)
-		}
-	}, [supabase, jobState, setJobState])
-	useEffect(() => {
-		chartData = (jobState.epochs as Epoch[]).map((epoch, index) => ({
-			id: index,
-			gen_loss: epoch?.gen_loss,
-			disc_loss: epoch?.disc_loss,
-		}))
-	}, [jobState])
 	return (
 		<Card>
 			<CardHeader>
